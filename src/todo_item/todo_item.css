@@ -1,0 +1,10 @@
+/* .todo-container{
+  display: flex;
+  background-color: azure;
+} */
+
+.todo-container div {
+  & :first-child{
+    font-weight: bold;
+  }
+}
