@@ -1,11 +1,5 @@
-import { Project } from "../project_item/project_item";
 import { TodoItem } from "./todo_item";
 import { compareAsc, format } from "date-fns";
-
-let todo_form = function (){ // activate button to make form on press id like modal more actually
-  let container = document.querySelector(".todo-form-container");
-  let form = document.createElement("form")
-}
 
 export function displayProjectTasks (curr_project, project_index){
   let todo_container = document.querySelector('.todo-container');
@@ -63,4 +57,38 @@ export function deleteTaskListeners () {
       window.projects[delete_button.dataset.projectIndex].todoItems.splice(delete_button.dataset.index, 1);
     })
   });
+}
+
+export function addTaskButtonListener(){
+  let task = document.querySelector(".new-task");
+  const dialog = document.querySelector('#dialog-task');
+  task.addEventListener("click", () => {
+    dialog.showModal();
+  })
+}
+
+export function submitTaskLogic(){
+  const submit = document.querySelector('#task-submit');
+  submit.addEventListener('click', (event) =>{
+    event.preventDefault();
+    const dialog = document.querySelector('#dialog-task');
+    const title = document.querySelector('#title');
+    const description = document.querySelector('#description');
+    const date = document.querySelector('#date');
+    const priority_0 = document.querySelector('#priority-0');
+    const priority_1 = document.querySelector('#priority-1');
+    if(title.value, description.value){
+      if(priority_0.checked)
+        var task = new TodoItem(title.value, description.value, 0, date.value);
+      if(priority_1.checked)
+        var task = new TodoItem(title.value, description.value, 1, date.value);
+      title.value = '';
+      description.value = '';
+      var selected_project_index = document.querySelector('.project-select').selectedIndex
+      window.projects[selected_project_index].todoItems.push(task);
+      displayProjectTasks(window.projects[selected_project_index], selected_project_index);
+      deleteTaskListeners();
+    }
+    dialog.close();
+  })
 }

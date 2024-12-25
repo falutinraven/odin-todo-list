@@ -1,4 +1,5 @@
 import { Project } from "./project_item";
+import { displayProjectTasks } from "../todo_item/todo_controller";
 
 function addProject(name){
   window.projects.push(new Project(name))
@@ -32,6 +33,9 @@ export function displayProjects(){
   container.innerHTML = "";
   let select_element = document.createElement('select');
   select_element.classList.add('project-select')
+  select_element.addEventListener('change', (event) => {
+    displayProjectTasks(window.projects[document.querySelector('.project-select').selectedIndex], document.querySelector('.project-select').selectedIndex)
+  })
   for (var i = 0; i < window.projects.length; i++){
     let curr_project = document.createElement('option');
     curr_project.value = window.projects[i].name;
